@@ -1,0 +1,102 @@
+{
+  "name": "jieba",
+  "displayName": "Jieba",
+  "description": "Jieba Chinese word segmenter for VSCode",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "publisher": "StephanosKomnenos",
+  "homepage": "https://github.com/stephanoskomnenos/vscode-jieba",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephanoskomnenos/vscode-jieba"
+  },
+  "icon": "jieba.png",
+  "license": "MIT",
+  "keywords": [
+    "Chinese",
+    "Segmentation"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:jieba.forwardWord",
+    "onCommand:jieba.backwardWord",
+    "onCommand:jieba.killWord",
+    "onCommand:jieba.backwardKillWord",
+    "onCommand:jieba.selectWord"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "keybindings": [
+      {
+        "command": "jieba.forwardWord",
+        "key": "Shift+Alt+F"
+      },
+      {
+        "command": "jieba.backwardWord",
+        "key": "Shift+Alt+B"
+      },
+      {
+        "command": "jieba.killWord",
+        "key": "Shift+Alt+D"
+      },
+      {
+        "command": "jieba.backwardKillWord",
+        "key": "Shift+Alt+Backspace"
+      },
+      {
+        "command": "jieba.selectWord",
+        "key": "Shift+Alt+2"
+      }
+    ],
+    "commands": [
+      {
+        "command": "jieba.forwardWord",
+        "title": "Jieba: Forward Word"
+      },
+      {
+        "command": "jieba.backwardWord",
+        "title": "Jieba: Backward Word"
+      },
+      {
+        "command": "jieba.killWord",
+        "title": "Jieba: Kill Word"
+      },
+      {
+        "command": "jieba.backwardKillWord",
+        "title": "Jieba: Backward Kill Word"
+      },
+      {
+        "command": "jieba.selectWord",
+        "title": "Jieba: Select Word"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "jieba-wasm": "^0.0.2"
+  }
+}
