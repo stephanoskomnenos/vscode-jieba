@@ -110,7 +110,7 @@ function searchForward(): {
       const nextNonSpace = new vscode.Position(lineNum, nextPos);
       rangesToDelete.push(new vscode.Range(start, nextNonSpace));
       newSelections.push(new vscode.Selection(nextNonSpace, nextNonSpace));
-      break;
+      continue;
     }
 
     /*
@@ -123,10 +123,8 @@ function searchForward(): {
       document.lineCount > lineNum + 1
     ) {
       const nextLineStart = new vscode.Position(lineNum + 1, 0);
-      newSelections.push(
-        new vscode.Selection(nextLineStart, nextLineStart),
-      );
-      break;
+      newSelections.push(new vscode.Selection(nextLineStart, nextLineStart));
+      continue;
     }
 
     /*
@@ -177,7 +175,7 @@ function searchBackward(): {
       const prevNonSpace = new vscode.Position(lineNum, prevPos);
       rangesToDelete.push(new vscode.Range(prevNonSpace, start));
       newSelections.push(new vscode.Selection(prevNonSpace, prevNonSpace));
-      break;
+      continue;
     }
 
     /*
@@ -188,7 +186,7 @@ function searchBackward(): {
     if (charNum === 0 && lineNum > 0) {
       const prevLineEnd = document.lineAt(lineNum - 1).range.end;
       newSelections.push(new vscode.Selection(prevLineEnd, prevLineEnd));
-      break;
+      continue;
     }
 
     /*
