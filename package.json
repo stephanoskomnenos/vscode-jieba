@@ -2,7 +2,7 @@
   "name": "jieba",
   "displayName": "Jieba",
   "description": "Jieba Chinese word segmenter for VSCode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/stephanoskomnenos/vscode-jieba"
   },
-  "icon": "jieba.png",
+  "icon": "jieba.jpg",
   "license": "MIT",
   "keywords": [
     "Chinese",

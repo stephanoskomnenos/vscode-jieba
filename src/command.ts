@@ -90,27 +90,27 @@ function searchForward(): {
   let rangesToDelete: vscode.Range[] = [];
 
   for (let [selection, tokens] of tokensBySelections) {
-    const start = selection.start;
-    const lineNum = start.line;
-    const charNum = start.character;
-    const line = document.lineAt(lineNum);
+    let cursor = selection.start;
+    const line = document.lineAt(cursor.line);
 
     /*
      * if the cursor is not at the end of the line
      * and the character after is whitespace,
-     * then jump to the next non-whitespace character
-     * and mark range(cursor, next non-whitespace) for deletion.
+     * then mark range(cursor, next non-whitespace) for deletion
+     * and move the cursor to the next non-whitespace character,
+     * then continue the process of moving forward.
      */
     if (
-      charNum !== line.range.end.character &&
-      isWhiteSpace(line.text[charNum])
+      cursor.character !== line.range.end.character &&
+      isWhiteSpace(line.text[cursor.character])
     ) {
-      const nonSpacePos = findFirstNonSpace(line.text.slice(charNum));
-      const nextPos = nonSpacePos === -1 ? 0 : charNum + nonSpacePos;
-      const nextNonSpace = new vscode.Position(lineNum, nextPos);
-      rangesToDelete.push(new vscode.Range(start, nextNonSpace));
-      newSelections.push(new vscode.Selection(nextNonSpace, nextNonSpace));
-      continue;
+      const nonSpacePos = findFirstNonSpace(line.text.slice(cursor.character));
+      const nextPos = nonSpacePos === -1
+        ? line.range.end.character
+        : cursor.character + nonSpacePos;
+      const nextNonSpace = new vscode.Position(cursor.line, nextPos);
+      rangesToDelete.push(new vscode.Range(cursor, nextNonSpace));
+      cursor = nextNonSpace;
     }
 
     /*
@@ -119,10 +119,10 @@ function searchForward(): {
      * then jump to the beginning of the next line.
      */
     if (
-      start.isEqual(line.range.end) &&
-      document.lineCount > lineNum + 1
+      cursor.isEqual(line.range.end) &&
+      document.lineCount > cursor.line + 1
     ) {
-      const nextLineStart = new vscode.Position(lineNum + 1, 0);
+      const nextLineStart = new vscode.Position(cursor.line + 1, 0);
       newSelections.push(new vscode.Selection(nextLineStart, nextLineStart));
       continue;
     }
@@ -132,9 +132,9 @@ function searchForward(): {
      * and mark range(cursor, end of the word + 1) for deletion.
      */
     for (let token of tokens) {
-      if (token.start <= charNum && token.end > charNum) {
-        const wordEnd = new vscode.Position(lineNum, token.end);
-        rangesToDelete.push(new vscode.Range(start, wordEnd));
+      if (token.start <= cursor.character && token.end > cursor.character) {
+        const wordEnd = new vscode.Position(cursor.line, token.end);
+        rangesToDelete.push(new vscode.Range(cursor, wordEnd));
         newSelections.push(new vscode.Selection(wordEnd, wordEnd));
         break;
       }
@@ -156,26 +156,22 @@ function searchBackward(): {
   let rangesToDelete: vscode.Range[] = [];
 
   for (let [selection, tokens] of tokensBySelections) {
-    const start = selection.start;
-    const lineNum = start.line;
-    const charNum = start.character;
-    const line = document.lineAt(lineNum);
+    let cursor = selection.start;
+    const line = document.lineAt(cursor.line);
 
     /*
      * if the cursor is not at the beginning of the line,
      * and the character before is whitespace,
-     * jump to the last non-whitespace before the cursor
-     * and mark range(last non-whitespace, cursor) for deletion.
+     * then mark range(last non-whitespace + 1, cursor) for deletion
+     * and move cursor to (last non-whitespace + 1) before it,
+     * then continue the process of moving backward.
      */
-    if (charNum !== 0 && isWhiteSpace(line.text[charNum - 1])) {
-      const nonSpacePos = findLastNonSpace(line.text.slice(0, charNum));
-      const prevPos = nonSpacePos === -1
-        ? line.range.end.character
-        : nonSpacePos;
-      const prevNonSpace = new vscode.Position(lineNum, prevPos);
-      rangesToDelete.push(new vscode.Range(prevNonSpace, start));
-      newSelections.push(new vscode.Selection(prevNonSpace, prevNonSpace));
-      continue;
+    if (cursor.character !== 0 && isWhiteSpace(line.text[cursor.character - 1])) {
+      const nonSpacePos = findLastNonSpace(line.text.slice(0, cursor.character));
+      const nextPos = nonSpacePos === -1 ? 0 : nonSpacePos;
+      const whitespaceStart = new vscode.Position(cursor.line, nextPos + 1);
+      rangesToDelete.push(new vscode.Range(whitespaceStart, cursor));
+      cursor = whitespaceStart;
     }
 
     /*
@@ -183,8 +179,8 @@ function searchBackward(): {
      * and the previous line exists,
      * jump to the end of the previous line.
      */
-    if (charNum === 0 && lineNum > 0) {
-      const prevLineEnd = document.lineAt(lineNum - 1).range.end;
+    if (cursor.character === 0 && cursor.line > 0) {
+      const prevLineEnd = document.lineAt(cursor.line - 1).range.end;
       newSelections.push(new vscode.Selection(prevLineEnd, prevLineEnd));
       continue;
     }
@@ -194,9 +190,9 @@ function searchBackward(): {
      * and mark range(the beginning of the word, cursor) for deletion
      */
     for (let token of tokens) {
-      if (token.start < charNum && token.end >= charNum) {
-        const wordStart = new vscode.Position(lineNum, token.start);
-        rangesToDelete.push(new vscode.Range(wordStart, start));
+      if (token.start < cursor.character && token.end >= cursor.character) {
+        const wordStart = new vscode.Position(cursor.line, token.start);
+        rangesToDelete.push(new vscode.Range(wordStart, cursor));
         newSelections.push(new vscode.Selection(wordStart, wordStart));
         break;
       }
