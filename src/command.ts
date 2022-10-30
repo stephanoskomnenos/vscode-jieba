@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { parseAllSelections, Token } from "./parse";
+import { parseAllSelections } from "./parse";
 
 export function forwardWord() {
   const editor = vscode.window.activeTextEditor;
@@ -166,8 +166,12 @@ function searchBackward(): {
      * and move cursor to (last non-whitespace + 1) before it,
      * then continue the process of moving backward.
      */
-    if (cursor.character !== 0 && isWhiteSpace(line.text[cursor.character - 1])) {
-      const nonSpacePos = findLastNonSpace(line.text.slice(0, cursor.character));
+    if (
+      cursor.character !== 0 && isWhiteSpace(line.text[cursor.character - 1])
+    ) {
+      const nonSpacePos = findLastNonSpace(
+        line.text.slice(0, cursor.character),
+      );
       const nextPos = nonSpacePos === -1 ? 0 : nonSpacePos;
       const whitespaceStart = new vscode.Position(cursor.line, nextPos + 1);
       rangesToDelete.push(new vscode.Range(whitespaceStart, cursor));

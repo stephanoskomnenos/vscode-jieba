@@ -8,7 +8,7 @@ export type Token = {
 };
 
 function parseSentence(sentence: string): Token[] {
-  return tokenize(sentence, "default", false);
+  return tokenize(sentence, "default", true);
 }
 
 export function parseAllSelections(): Map<vscode.Selection, Token[]> {
