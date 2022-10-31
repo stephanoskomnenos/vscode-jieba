@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.4
+
+- Write deleted contents to the clipboard
+
 ## 0.1.3
 
 - Enable HMM

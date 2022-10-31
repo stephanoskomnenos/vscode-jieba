@@ -24,9 +24,16 @@ export function killWord() {
   if (editor === undefined) {
     return;
   }
+  const clipboard = vscode.env.clipboard;
+  const document = editor.document;
 
   const { newSelections, rangesToDelete } = searchForward();
 
+  for (let range of rangesToDelete) {
+    const textToCut = document.getText(range);
+    clipboard.writeText(textToCut);
+    break;
+  }
   editor.selections = newSelections;
   editor.edit((edit) => {
     for (let range of rangesToDelete) {
@@ -40,9 +47,16 @@ export function backwardKillWord() {
   if (editor === undefined) {
     return;
   }
+  const clipboard = vscode.env.clipboard;
+  const document = editor.document;
 
   const { newSelections, rangesToDelete } = searchBackward();
 
+  for (let range of rangesToDelete) {
+    const textToCut = document.getText(range);
+    clipboard.writeText(textToCut);
+    break;
+  }
   editor.selections = newSelections;
   editor.edit((edit) => {
     for (let range of rangesToDelete) {
