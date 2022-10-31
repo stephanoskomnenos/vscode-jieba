@@ -19,7 +19,7 @@ export function backwardWord() {
   editor.selections = newSelections;
 }
 
-export function killWord() {
+export async function killWord() {
   const editor = vscode.window.activeTextEditor;
   if (editor === undefined) {
     return;
@@ -35,14 +35,14 @@ export function killWord() {
     break;
   }
   editor.selections = newSelections;
-  editor.edit((edit) => {
+  await editor.edit((edit) => {
     for (let range of rangesToDelete) {
       edit.delete(range);
     }
   });
 }
 
-export function backwardKillWord() {
+export async function backwardKillWord() {
   const editor = vscode.window.activeTextEditor;
   if (editor === undefined) {
     return;
@@ -58,7 +58,7 @@ export function backwardKillWord() {
     break;
   }
   editor.selections = newSelections;
-  editor.edit((edit) => {
+  await editor.edit((edit) => {
     for (let range of rangesToDelete) {
       edit.delete(range);
     }
