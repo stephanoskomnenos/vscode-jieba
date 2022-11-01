@@ -29,14 +29,14 @@ export async function killWord() {
 
   const { newSelections, rangesToDelete } = searchForward();
 
-  for (let range of rangesToDelete) {
+  for (const range of rangesToDelete) {
     const textToCut = document.getText(range);
     clipboard.writeText(textToCut);
     break;
   }
   editor.selections = newSelections;
   await editor.edit((edit) => {
-    for (let range of rangesToDelete) {
+    for (const range of rangesToDelete) {
       edit.delete(range);
     }
   });
@@ -52,14 +52,14 @@ export async function backwardKillWord() {
 
   const { newSelections, rangesToDelete } = searchBackward();
 
-  for (let range of rangesToDelete) {
+  for (const range of rangesToDelete) {
     const textToCut = document.getText(range);
     clipboard.writeText(textToCut);
     break;
   }
   editor.selections = newSelections;
   await editor.edit((edit) => {
-    for (let range of rangesToDelete) {
+    for (const range of rangesToDelete) {
       edit.delete(range);
     }
   });
@@ -73,14 +73,14 @@ export function selectWord() {
 
   const tokensBySelections = parseAllSelections();
 
-  let newSelections: vscode.Selection[] = [];
+  const newSelections: vscode.Selection[] = [];
 
-  for (let [selection, tokens] of tokensBySelections) {
+  for (const [selection, tokens] of tokensBySelections) {
     const start = selection.start;
     const lineNum = start.line;
     const charNum = start.character;
 
-    for (let token of tokens) {
+    for (const token of tokens) {
       if (token.start <= charNum && token.end > charNum) {
         const wordStart = new vscode.Position(lineNum, token.start);
         const wordEnd = new vscode.Position(lineNum, token.end);
@@ -100,10 +100,10 @@ function searchForward(): {
   const document = vscode.window.activeTextEditor!.document;
   const tokensBySelections = parseAllSelections();
 
-  let newSelections: vscode.Selection[] = [];
-  let rangesToDelete: vscode.Range[] = [];
+  const newSelections: vscode.Selection[] = [];
+  const rangesToDelete: vscode.Range[] = [];
 
-  for (let [selection, tokens] of tokensBySelections) {
+  for (const [selection, tokens] of tokensBySelections) {
     let cursor = selection.start;
     const line = document.lineAt(cursor.line);
 
@@ -145,7 +145,7 @@ function searchForward(): {
      * jump to the end of the word
      * and mark range(cursor, end of the word + 1) for deletion.
      */
-    for (let token of tokens) {
+    for (const token of tokens) {
       if (token.start <= cursor.character && token.end > cursor.character) {
         const wordEnd = new vscode.Position(cursor.line, token.end);
         rangesToDelete.push(new vscode.Range(cursor, wordEnd));
@@ -166,10 +166,10 @@ function searchBackward(): {
 
   const tokensBySelections = parseAllSelections();
 
-  let newSelections: vscode.Selection[] = [];
-  let rangesToDelete: vscode.Range[] = [];
+  const newSelections: vscode.Selection[] = [];
+  const rangesToDelete: vscode.Range[] = [];
 
-  for (let [selection, tokens] of tokensBySelections) {
+  for (const [selection, tokens] of tokensBySelections) {
     let cursor = selection.start;
     const line = document.lineAt(cursor.line);
 
@@ -207,7 +207,7 @@ function searchBackward(): {
      * jump to the beginning of the word
      * and mark range(the beginning of the word, cursor) for deletion
      */
-    for (let token of tokens) {
+    for (const token of tokens) {
       if (token.start < cursor.character && token.end >= cursor.character) {
         const wordStart = new vscode.Position(cursor.line, token.start);
         rangesToDelete.push(new vscode.Range(wordStart, cursor));

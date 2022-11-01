@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { tokenize } from "jieba-wasm";
 
-export type Token = {
+export interface Token {
   word: string;
   start: number;
   end: number;
@@ -18,7 +18,7 @@ export function parseAllSelections(): Map<vscode.Selection, Token[]> {
 
   const tokensBySelections = new Map<vscode.Selection, Token[]>();
   selections.map((s) => {
-    let line = document.lineAt(s.start.line).text;
+    const line = document.lineAt(s.start.line).text;
     tokensBySelections.set(s, parseSentence(line));
   });
 
