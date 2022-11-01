@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.6
+
+- Set the minimum required VSCode version to 1.67.0
+
 ## 0.1.5
 
 - Update icon
