@@ -20,7 +20,13 @@ VSCode 本身以及 Vim、Emacs 插件都不具备中文分词功能。比如 Vi
 
 ## 示例
 
-![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/example.gif)
+![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/chn1.gif)
+
+![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/chn2.gif)
+
+![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/eng.gif)
+
+![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/chn3.gif)
 
 ## 使用建议
 
