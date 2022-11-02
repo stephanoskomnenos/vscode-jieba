@@ -26,8 +26,6 @@ VSCode 本身以及 Vim、Emacs 插件都不具备中文分词功能。比如 Vi
 
 ![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/eng.gif)
 
-![](https://github.com/stephanoskomnenos/vscode-jieba/raw/main/images/chn3.gif)
-
 ## 使用建议
 
 ### Vim 插件

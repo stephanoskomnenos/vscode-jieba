@@ -17,10 +17,10 @@ suite("Extension Test Suite", () => {
   test("English test", englishTest);
 });
 
-const chnText = `“自由软件”尊重用户的自由，并且尊重整个社区。`;
+const chnText = "“自由软件”尊重用户的自由，并且尊重整个社区。";
 
 const engText =
-  `“Free software” means software that respects users' freedom and community. `;
+  "“Free software” means software that respects users' freedom and community. ";
 
 async function basicTest() {
   const doc = await vscode.workspace.openTextDocument();
