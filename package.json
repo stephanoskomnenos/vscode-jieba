@@ -89,7 +89,7 @@
     "@types/node": "18.x",
     "@types/vscode": "^1.73.0",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.42.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "@vscode/test-electron": "^2.3.0",
     "eslint": "^8.24.0",
     "glob": "^8.0.3",
