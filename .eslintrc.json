@@ -16,7 +16,7 @@
         "curly": "warn",
         "eqeqeq": "warn",
         "indent": "off",
-        "max-len": "warn",
+        "max-len": ["warn", 120],
         "no-throw-literal": "warn",
         "no-trailing-spaces": "warn",
         "prefer-const": "warn",

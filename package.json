@@ -2,9 +2,9 @@
   "name": "jieba",
   "displayName": "Jieba",
   "description": "Jieba Chinese word segmenter for VSCode",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
-    "vscode": "^1.67.0"
+    "vscode": "^1.78.1"
   },
   "publisher": "StephanosKomnenos",
   "homepage": "https://github.com/stephanoskomnenos/vscode-jieba",
@@ -20,13 +20,6 @@
   ],
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:jieba.forwardWord",
-    "onCommand:jieba.backwardWord",
-    "onCommand:jieba.killWord",
-    "onCommand:jieba.backwardKillWord",
-    "onCommand:jieba.selectWord"
   ],
   "main": "./out/extension.js",
   "contributes": {
