@@ -64,7 +64,7 @@ async function basicTest() {
   });
   editor.selection = new vscode.Selection(startPos, startPos);
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     forwardWord();
   }
   // 光标在"尊"字上
@@ -88,7 +88,7 @@ async function basicTest() {
   for (let i = 0; i < 3; i++) {
     backwardWord();
   }
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 4; i++) {
     await backwardKillWord();
   }
   assert.ok(editor.selection.start.isEqual(new vscode.Position(0, 0)));
