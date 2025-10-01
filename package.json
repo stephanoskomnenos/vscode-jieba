@@ -138,7 +138,7 @@
     "@types/node": "^24.3.3",
     "@types/vscode": "^1.104.0",
     "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^3.6.0",
+    "@vscode/vsce": "^3.6.2",
     "eslint": "^9.35.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
