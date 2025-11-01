@@ -152,6 +152,6 @@
   },
   "dependencies": {
     "jieba-wasm": "^2.4.0",
-    "quick-lru": "^7.2.0"
+    "quick-lru": "^7.3.0"
   }
 }
